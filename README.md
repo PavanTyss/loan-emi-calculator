@@ -1,50 +1,68 @@
-# React + TypeScript + Vite
+# Tabbed Loan Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based loan calculator with support for multiple loan types (Housing, Vehicle, and Personal loans).
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Multiple Loan Types**: Switch between Housing, Vehicle, and Personal loans using tabs
+- **Interactive UI**: Adjust loan parameters using sliders or direct input fields
+- **Real-time Calculations**: EMI and other loan details update instantly as you change parameters
+- **Visual Breakdown**: Pie chart showing the proportion of principal amount and total interest
+- **Responsive Design**: Works well on both desktop and mobile devices
 
-## Expanding the ESLint configuration
+## Technical Details
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Dependencies
 
-- Configure the top-level `parserOptions` property like this:
+- React
+- Redux (for state management)
+- Recharts (for data visualization)
+- Tailwind CSS (for styling)
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Start the development server:
+   ```
+   npm start
+   ```
+
+## Usage
+
+1. Select the type of loan using the tabs at the top
+2. Adjust the loan amount, interest rate, and tenure using the sliders or input fields
+3. View the calculated monthly EMI and breakdown of total payment
+4. The pie chart visualizes the proportion of principal amount and interest
+
+## Component Structure
+
+The main component is `LoanCalculator.tsx` which:
+- Manages the UI state for the active loan tab
+- Connects to Redux for loan calculation state
+- Renders the tabbed interface, sliders, and visualization
+
+## Redux Integration
+
+This component works with a Redux store that should include:
+- A `loanSlice` with actions for setting loan parameters and calculating EMI
+- State containing `loanAmount`, `interestRate`, `loanTenure`, `monthlyEMI`, `totalInterest`, and `totalAmount`
+
+## Customization
+
+The loan parameters for each type can be easily modified in the `loanTypes` object at the top of the component:
 
 ```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
+const loanTypes = {
+  housing: {
+    name: "Housing Loan",
+    minAmount: 500000,
+    maxAmount: 10000000,
+    // other parameters...
   },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+  // other loan types...
+};
 ```
